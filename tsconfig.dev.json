@@ -1,5 +1,10 @@
 {
   "include": [
-    ".eslintrc.js"
+    ".eslintrc.js",
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "hono-sample/**/*.ts"
   ]
 }

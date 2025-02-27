@@ -1,10 +1,23 @@
-import {onRequest} from "firebase-functions/v2/https";
+import {onCall, onRequest} from "firebase-functions/v2/https";
 import * as logger from "firebase-functions/logger";
+import {handle} from "./handle";
+import {app} from "./app";
 
-// Start writing functions
-// https://firebase.google.com/docs/functions/typescript
+// Hono を handle に渡して onRequest を定義
+export const honoWorld = onRequest(handle(app));
 
-export const helloWorld = onRequest((request, response) => {
+// 通常の onRequest
+export const helloWorld = onRequest((req, res) => {
   logger.info("Hello logs!", {structuredData: true});
-  response.send("Hello from Firebase!!!!!!");
+  res.send("Hello from Firebase!!!!!!");
+});
+
+export const helloOnCall = onCall((request) => {
+  logger.info("Hello logs!", {structuredData: true});
+
+  // Message text passed from the client.
+  const text = request.data.text;
+  return {
+    returnContent: text,
+  };
 });
